@@ -46,4 +46,30 @@ export class LogService {
   setFormLog(log: Log) {
     this.logSource.next(log);
   }
+
+  addLog(log: Log) {
+    this.logs.unshift(log);
+  }
+
+  deleteLog(log: Log) {
+    this.logs.forEach((x, index) => {
+      // When the log gets updated, the old one is spliced from the array
+      if (log.id === x.id) {
+        this.logs.splice(index, 1);
+      }
+    });
+  }
+
+  updateLog(log: Log) {
+    // Loop through the logs-array
+    // x is each individual log in the logs array
+    this.logs.forEach((x, index) => {
+      // When the log gets updated, the old one is spliced from the array
+      if (log.id === x.id) {
+        this.logs.splice(index, 1);
+      }
+    });
+    // And the new one gets put first in the array.
+    this.logs.unshift(log);
+  }
 }

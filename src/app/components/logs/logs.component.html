@@ -4,6 +4,6 @@
     <!-- TODO: Add a click event to show the description, and a real boolean to control it -->
     <p *ngIf="showDescription">{{ log.description }}</p>
     <span class="log-date">{{ log.date | date: 'short' }}</span>
-    <i class="fa fa-remove"></i> 
+    <i class="fa fa-remove" (click)="onDelete(log)"></i> 
   </li>
 </ul>
