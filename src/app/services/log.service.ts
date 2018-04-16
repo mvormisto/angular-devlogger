@@ -15,8 +15,12 @@ export class LogService {
 
   selectedLog = this.logSource.asObservable();
 
+  private stateSource = new BehaviorSubject<boolean>(true);
+
+  stateClear = this.stateSource.asObservable();
+
   constructor() {
-    this.logs = [
+   /*  this.logs = [
       {
         id: '1',
         title: 'Generated components',
@@ -36,11 +40,24 @@ export class LogService {
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
         date: new Date ('12/28/2017 12:54:23')
       }
-    ];
+    ]; */
+    this.logs = [];
   }
 
   getLogs(): Observable<Log[]> {
-    return of(this.logs);
+    // Check if there is anything inside local storage
+    if (localStorage.getItem('logs') === null) {
+      // If nothing in local storage, just make an empty array
+      this.logs = [];
+    } else {
+      // Because the data is stored as JSON strings, we need to convert it back
+      // JSON.parse is the opposit of JSON.stringify
+      this.logs = JSON.parse(localStorage.getItem('logs'));
+    }
+    // Sort the logs by the date
+    return of(this.logs.sort((a, b) => {
+      return b.date - a.date;
+    }));
   }
 
   setFormLog(log: Log) {
@@ -49,15 +66,10 @@ export class LogService {
 
   addLog(log: Log) {
     this.logs.unshift(log);
-  }
 
-  deleteLog(log: Log) {
-    this.logs.forEach((x, index) => {
-      // When the log gets updated, the old one is spliced from the array
-      if (log.id === x.id) {
-        this.logs.splice(index, 1);
-      }
-    });
+    // Add to local storage
+    localStorage.setItem('logs', JSON.stringify(this.logs));
+    // Stringify converts the value ('this.logs' object array) to a JSON string
   }
 
   updateLog(log: Log) {
@@ -69,7 +81,26 @@ export class LogService {
         this.logs.splice(index, 1);
       }
     });
-    // And the new one gets put first in the array.
+    // And the new one gets put first in the array
     this.logs.unshift(log);
+
+    // Update the local storage
+    localStorage.setItem('logs', JSON.stringify(this.logs));
+  }
+
+  deleteLog(log: Log) {
+    this.logs.forEach((x, index) => {
+      // When the log gets updated, the old one is spliced from the array
+      if (log.id === x.id) {
+        this.logs.splice(index, 1);
+      }
+    });
+
+    // Delete from the local storage
+    localStorage.setItem('logs', JSON.stringify(this.logs));
+  }
+
+  clearState() {
+    this.stateSource.next(true);
   }
 }

@@ -1,9 +1,22 @@
 <div class="card card-body mb-3">
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <input type="text" name="title" [(ngModel)]="title" class="form-control" placeholder="Add a log" />
+      <input  type="text" 
+              name="title" 
+              [(ngModel)]="title"
+              class="form-control mb-3" 
+              placeholder="Add a log"
+              (focus)="toggleDescriptionVisibility()"
+              (blur)="toggleDescriptionVisibility()" />
+      <input  type="text" 
+              name="description" 
+              [(ngModel)]="description"
+              [hidden]="this.hideDescription && !this.title"
+              class="form-control" 
+              placeholder="Description"/>
     </div>
-    <input type="submit" value="Add Log" class="btn btn-success" [disabled]="!this.title" />
-    <button type="button" class="btn btn-warning" [hidden]="!this.title" (click)="clearForm()">Clear</button>
+    <input type="submit" value="Add Log" class="btn btn-success" [disabled]="!this.title" [hidden]="!this.isNew" />
+    <input type="submit" value="Edit Log" class="btn btn-success" [hidden]="this.isNew" />
+    <button type="button" class="btn btn-warning" [hidden]="!this.title" (click)="clearState()">Clear</button>
   </form>
 </div>
