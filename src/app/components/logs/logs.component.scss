@@ -1,5 +1,14 @@
 @import '~sass/variables';
 
+.list-group-item {
+  > p {
+    margin-top: 1rem;
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
+}
 .log-date {
   color: $font-lighter;
 }

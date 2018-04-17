@@ -52,7 +52,7 @@ export class LogFormComponent implements OnInit {
       const updLog = {
         id: this.id,
         title: this.title,
-        description: null,
+        description: this.description,
         date: new Date(),
       };
 

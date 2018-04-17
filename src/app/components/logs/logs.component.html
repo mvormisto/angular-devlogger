@@ -1,13 +1,21 @@
 <ul class="list-group" *ngIf="loaded && logs.length > 0">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-      *ngFor="let log of logs" 
-      [class.list-group-item-secondary]="selectedLog === log">
-      <!-- The class "list-group-item-secondary only gets added WHEN selectedLog equals the log object this list item has printed -->
-    <a href="#" (click)="onSelect(log)">{{ log.title }}</a>
+  <li class="list-group-item d-flex justify-content-between align-items-center"
+    style="flex-wrap: wrap"
+    *ngFor="let log of logs"
+    [class.list-group-item-secondary]="selectedLog === log">
+    <!-- The class "list-group-item-secondary only gets added WHEN selectedLog equals the log object this list item has printed -->
+    <span style="flex-grow: 1;flex-basis: 60%" href="#">{{ log.title }}</span>
     <!-- TODO: Add a click event to show the description, and a real boolean to control it -->
-    <p *ngIf="showDescription">{{ log.description }}</p>
-    <span class="log-date">{{ log.date | date: 'short' }}</span>
-    <a><i class="fa fa-remove" (click)="onDelete(log)"></i></a>
+    <span style="flex-grow: 1;flex-basis: 20%" class="log-date">{{ log.date | date: "dd.MM.yyyy" }}</span>
+    <div class="item-functions">
+      <a href="#">
+        <i class="fa fa-pencil" (click)="onSelect(log)"></i>
+      </a>
+      <a style="flex-grow: 1;flex-basis: 20%" href="#">
+        <i class="fa fa-remove" (click)="onDelete(log)"></i>
+      </a>
+    </div>
+    <p *ngIf="log.description">{{ log.description }}</p>
   </li>
 </ul>
 

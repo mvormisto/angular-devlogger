@@ -1,11 +1,13 @@
 <div class="card card-body mb-3">
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <input  type="text" 
+      <label for="title">Add a new log line</label>
+      <input  type="text"
+              id="title" 
               name="title" 
               [(ngModel)]="title"
               class="form-control mb-3" 
-              placeholder="Add a log"
+              placeholder="A descriptive title"
               (focus)="toggleDescriptionVisibility()"
               (blur)="toggleDescriptionVisibility()" />
       <input  type="text" 

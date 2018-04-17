@@ -1,6 +1,6 @@
 export interface Log {
     id: string,
     title: string,
-    description?: string,
+    description: string,
     date: any
 }
